@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavBar, CardComponent } from './Components/index';
 
 import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from './state';
-import { RootState } from './state';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
 
-  const { getDate } = bindActionCreators(actionCreators, dispatch);
+  const { handleInitialData, filterDate } = bindActionCreators(
+    actionCreators,
+    dispatch
+  );
+
+  const [stateDate, setstate] = useState([]);
+  const [filter, setFilter] = useState([]);
+  const [state, setDate] = useState('/');
 
   useEffect(() => {
-    getDate();
-  }, []);
-
-  const state = useSelector((state: RootState) => state.date);
-  console.log(state);
+    handleInitialData(setstate);
+    filterDate(setFilter, state);
+  }, [dispatch, state]);
 
   return (
     <div
@@ -27,8 +31,15 @@ const App: React.FC = () => {
         display: 'flex',
       }}
     >
-      <NavBar />
-      <div>{/* <CardComponent /> */}</div>
+      <NavBar setDate={setDate} />
+      <div className='card'>
+        {typeof filter !== typeof 'awd' && filter.length !== 0
+          ? filter?.map((item, idx) => <CardComponent key={idx} date={item} />)
+          : stateDate.length !== 0 &&
+            stateDate.map((item, idx) => (
+              <CardComponent key={idx} date={item} />
+            ))}
+      </div>
     </div>
   );
 };

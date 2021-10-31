@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 .App-logo {
@@ -11,6 +13,23 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
+}
+.card {
+  height: 100vh;
+  overflow-y: scroll;
+  display: grid;
+  grid-template-columns: 49% 49%;
+  grid-gap: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  overflow: auto;
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.card::-webkit-scrollbar {
+  width: 0;
+  height: 0;
 }
 
 .App-header {
