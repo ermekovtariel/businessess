@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { NavBar, CardComponent } from './Components/index';
 
-function App() {
+import './App.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from './state';
+import { RootState } from './state';
+
+const App: React.FC = () => {
+  const dispatch = useDispatch();
+
+  const { getDate } = bindActionCreators(actionCreators, dispatch);
+
+  useEffect(() => {
+    getDate();
+  }, []);
+
+  const state = useSelector((state: RootState) => state.date);
+  console.log(state);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div
+      className='App'
+      style={{
+        color: '#fff',
+        display: 'flex',
+      }}
+    >
+      <NavBar />
+      <div>{/* <CardComponent /> */}</div>
     </div>
   );
-}
+};
 
 export default App;
